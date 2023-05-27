@@ -12,10 +12,10 @@ app = FastAPI()
 @app.get('/')
 async def get_image(request: Request):
     path = re.findall(r'path=(.*)', request.url.query)[0]
-    session = HTMLSession()
-    res = session.get(path)
-    session.close()
-    
+
+    with HTMLSession() as session:
+        res = session.get(path)
+
     return StreamingResponse(
         BytesIO(res.content), media_type=res.headers.get('Content-Type')
     )
