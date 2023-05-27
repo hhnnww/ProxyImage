@@ -10,7 +10,7 @@ app = FastAPI()
 
 
 @app.get('/')
-def get_image(request: Request):
+async def get_image(request: Request):
     path = re.findall(r'path=(.*)', request.url.query)[0]
     session = HTMLSession()
     res = session.get(path)
